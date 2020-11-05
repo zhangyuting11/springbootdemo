@@ -74,7 +74,44 @@
 ![拦截过滤时](https://github.com/zhangyuting11/springbootdemo/blob/master/interceptor/document/3.jpg?raw=true)
 
 
-### 全局异常 （后续添加）
+### 全局异常处理 
+全局异常处理可以让我们少用许多try...catch...,让代码更加简洁,把码的时间都放在业务层面上。
+
+#### 代码实现
+主要添加@ControllerAdvice注解，并在方法中定义相应的异常处理，比如程序异常，空指针异常，业务异常等等
+将异常做JSON封装返回到前端。比如我们在实现拦截器的时候，在http请求未发送请求头token的时候我们就抛出了一个异常
+这个时候如果不做异常捕获处理，前端是会受到500的错误页面的，出于前后端友好沟通，需要将异常封装成统一的格式给前端。
+代码实现如下:
+
+    @ControllerAdvice
+    public class MyExceptionInterceptor {
+
+    /*
+    * @params : [ex]
+    * @Description : //TODO 程序异常处理
+    * @return : org.springframework.http.ResponseEntity
+    * @Create : create by yuting 2020/11/5
+    **/
+    @ResponseBody
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity runtimeException(Exception ex) {
+        return ResponseEntity.ok(BaseResult.fail("服务器异常"));
+    }
+
+    /*
+    * @params : [e]
+    * @Description : //TODO 业务异常全局处理
+    * @return : org.springframework.http.ResponseEntity
+    * @Create : create by yuting 2020/11/5
+    **/
+    @ResponseBody
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity businessException(BaseException e) {
+        return ResponseEntity.ok(BaseResult.fail(e.getMessage()));
+      }
+    }
+    
+
 
 
 
