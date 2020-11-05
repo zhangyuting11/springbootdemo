@@ -111,6 +111,17 @@
       }
     }
     
+    
+### 跨域配置
+在拦截器类中重构addCorsMappings方法
+在方法中做相应的配置
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        WebMvcConfigurer.super.addCorsMappings(registry);
+        registry.addMapping("/**").allowedMethods("*").allowedHeaders("**").allowedOrigins("*");
+    }
+    
 
 
 
