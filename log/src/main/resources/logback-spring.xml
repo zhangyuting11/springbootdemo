@@ -90,17 +90,29 @@
         </rollingPolicy>
     </appender>
 
+    <!--多环境配置-->
+    <springProfile name="pro">
+        <root level="INFO">
+            <appender-ref ref="FILE_INFO"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
 
-    <root level="DEBUG">
-        <appender-ref ref="CONSOLE_DEBUG"/>
-        <appender-ref ref="FILE_DEBUG"/>
-        <appender-ref ref="FILE_INFO"/>
-        <appender-ref ref="FILE_ERROR"/>
-    </root>
+    </springProfile>
 
-    <!--类的全路径，单独配置-->
-    <logger name="com.zyt.log.controller" level="ERROR">
-        <appender-ref ref="CONSOLE_DEBUG"/>
-    </logger>
+    <springProfile name="dev,test">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE_DEBUG"/>
+            <appender-ref ref="FILE_DEBUG"/>
+            <appender-ref ref="FILE_INFO"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
+
+        <!--类的全路径，单独配置-->
+        <logger name="com.zyt.log.controller" level="ERROR">
+            <appender-ref ref="CONSOLE_DEBUG"/>
+        </logger>
+    </springProfile>
+
+
 
 </configuration>
