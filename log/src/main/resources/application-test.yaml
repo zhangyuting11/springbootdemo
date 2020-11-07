@@ -1,0 +1,6 @@
+server:
+  port: 7777
+
+logging:
+  level:
+    com.zyt.log: info
